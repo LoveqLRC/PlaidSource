@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CutoutTextView">
+
+        <attr name="foregroundColor" format="color"/>
+
+        <attr name="android:text"/>
+
+        <attr name="android:fontFamily"/>
+
+    </declare-styleable>
+</resources>
