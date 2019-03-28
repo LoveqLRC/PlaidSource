@@ -2,10 +2,13 @@
 <resources>
     <declare-styleable name="CutoutTextView">
 
+        <!--前景色， 这里就是背景色-->
         <attr name="foregroundColor" format="color"/>
 
+        <!--文字-->
         <attr name="android:text"/>
 
+        <!--字体-->
         <attr name="android:fontFamily"/>
 
     </declare-styleable>

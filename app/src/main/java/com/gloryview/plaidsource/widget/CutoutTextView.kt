@@ -38,6 +38,8 @@ class CutoutTextView(context: Context, attrs: AttributeSet) : View(context, attr
     private var textY = 0f
     private var textX = 0f
 
+
+    //读取xml配置参数，有就设置
     init {
         val a = getContext().obtainStyledAttributes(attrs, R.styleable.CutoutTextView, 0, 0)
 
@@ -81,33 +83,42 @@ class CutoutTextView(context: Context, attrs: AttributeSet) : View(context, attr
     }
 
 
+    /**
+     * 计算字体位置，字体的大小
+     */
     private fun calculateTextPosition() {
+        //实际的字体宽度*PHI=控件的宽度 (这里PHI黄金分隔值)
         val targetWidth = width / PHI
+        //根据传入字体宽度 动态计算合适的字体大小
         val textSize = ViewUtils.getSingleLineTextSize(
             text, textPaint, targetWidth, 0f, maxTextSize, 0.5f,
             resources.displayMetrics
         )
         textPaint.textSize = textSize
         //https://chris.banes.me/2014/03/27/measuring-text/
+        //计算字体的开始X坐标
         textX = (width - textPaint.measureText(text)) / 2
         val textBounds = Rect()
         textPaint.getTextBounds(text, 0, text.length, textBounds)
-
+        //计算字体的开始Y坐标
         val textHeight = textBounds.height().toFloat()
         textY = (height + textHeight) / 2
 
     }
 
     private fun createBitmap() {
+        // cutout资源
         cutout?.run {
             if (!isRecycled) {
                 recycle()
             }
         }
-        //https://blog.csdn.net/iispring/article/details/50472485#commentBox
 
+        //https://blog.csdn.net/iispring/article/details/50472485#commentBox
+        //PorterDuff.Mode.CLEAR相当于透明色的效果，具体功能见上面的分析
         textPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
 
+        //创建bitmap
         cutout = createBitmap(width, height).applyCanvas {
             drawColor(foregroundColor)
             drawText(text, textX, textY, textPaint)
@@ -116,6 +127,7 @@ class CutoutTextView(context: Context, attrs: AttributeSet) : View(context, attr
 
 
     override fun onDraw(canvas: Canvas) {
+        //画图
         canvas.drawBitmap(cutout, 0f, 0f, null)
     }
 
