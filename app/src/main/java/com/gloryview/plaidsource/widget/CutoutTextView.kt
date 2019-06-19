@@ -128,7 +128,7 @@ class CutoutTextView(context: Context, attrs: AttributeSet) : View(context, attr
 
     override fun onDraw(canvas: Canvas) {
         //画图
-        canvas.drawBitmap(cutout, 0f, 0f, null)
+        canvas.drawBitmap(cutout!!, 0f, 0f, null)
     }
 
 

@@ -16,4 +16,9 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, CutoutActivity::class.java)
         startActivity(intent)
     }
+
+    fun materialButtons(view: View) {
+        val intent = Intent(this, MaterialButtonActivity::class.java)
+        startActivity(intent)
+    }
 }
