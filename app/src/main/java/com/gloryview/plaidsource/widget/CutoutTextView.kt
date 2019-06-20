@@ -8,6 +8,7 @@ import androidx.core.content.res.ResourcesCompat
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.withStyledAttributes
 import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.createBitmap
 import com.gloryview.plaidsource.R
@@ -31,7 +32,7 @@ class CutoutTextView(context: Context, attrs: AttributeSet) : View(context, attr
 
     private val textPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
     private val maxTextSize: Float
-    private val text: String
+    lateinit var text: String
 
     private var cutout: Bitmap? = null
     private var foregroundColor = Color.MAGENTA
@@ -41,38 +42,37 @@ class CutoutTextView(context: Context, attrs: AttributeSet) : View(context, attr
 
     //读取xml配置参数，有就设置
     init {
-        val a = getContext().obtainStyledAttributes(attrs, R.styleable.CutoutTextView, 0, 0)
+        context.withStyledAttributes(attrs, R.styleable.CutoutTextView) {
+            if (hasValue(R.styleable.CutoutTextView_android_fontFamily)) {
 
-        if (a.hasValue(R.styleable.CutoutTextView_android_fontFamily)) {
+                try {
+                    val font =
+                        ResourcesCompat.getFont(
+                            getContext(),
+                            getResourceId(R.styleable.CutoutTextView_android_fontFamily, 0)
+                        )
+                    if (font != null) {
+                        textPaint.typeface = font
+                    }
+                } catch (nfe: Resources.NotFoundException) {
 
-            try {
-                val font =
-                    ResourcesCompat.getFont(
-                        getContext(),
-                        a.getResourceId(R.styleable.CutoutTextView_android_fontFamily, 0)
-                    )
-                if (font != null) {
-                    textPaint.typeface = font
                 }
-            } catch (nfe: Resources.NotFoundException) {
+            }
 
+            if (hasValue(R.styleable.CutoutTextView_foregroundColor)) {
+                foregroundColor = getColor(R.styleable.CutoutTextView_foregroundColor, foregroundColor)
+            }
+
+            text = if (hasValue(R.styleable.CutoutTextView_android_text)) {
+                getString(R.styleable.CutoutTextView_android_text)
+            } else {
+                ""
             }
         }
 
-        if (a.hasValue(R.styleable.CutoutTextView_foregroundColor)) {
-            foregroundColor = a.getColor(R.styleable.CutoutTextView_foregroundColor, foregroundColor)
-        }
-
-        text = if (a.hasValue(R.styleable.CutoutTextView_android_text)) {
-            a.getString(R.styleable.CutoutTextView_android_text)
-        } else {
-            ""
-        }
-
-
         maxTextSize = context.resources.getDimensionPixelSize(R.dimen.display_4_text_size).toFloat()
 
-        a.recycle()
+
     }
 
 
