@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.gloryview.plaidsource">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -9,8 +10,11 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".MaterialButtonActivity"
-                  android:theme="@style/MaterialButtonTheme">
+        <activity android:name=".LifecycleObserverActivity">
+        </activity>
+        <activity
+                android:name=".MaterialButtonActivity"
+                android:theme="@style/MaterialButtonTheme">
         </activity>
         <activity android:name=".CutoutActivity">
         </activity>

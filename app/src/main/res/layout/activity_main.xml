@@ -20,4 +20,11 @@
             android:onClick="materialButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+
+    <Button
+            android:text="lifecycleObserverButtons"
+            android:onClick="lifecycleObserver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 </LinearLayout>

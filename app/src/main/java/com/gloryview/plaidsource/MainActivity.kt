@@ -21,4 +21,9 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, MaterialButtonActivity::class.java)
         startActivity(intent)
     }
+
+    fun lifecycleObserver(view: View) {
+        val intent = Intent(this, LifecycleObserverActivity::class.java)
+        startActivity(intent)
+    }
 }
